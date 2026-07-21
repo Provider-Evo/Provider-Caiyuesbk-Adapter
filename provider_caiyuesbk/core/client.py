@@ -1,21 +1,20 @@
 from __future__ import annotations
 
-from pathlib import Path
-
-from src.foundation.config.reader import load_plugin_api_keys
-
-_PLUGIN_DIR = Path(__file__).resolve().parents[2]
 import asyncio
+from pathlib import Path
 from typing import Any, AsyncGenerator, Dict, List, Optional, Union
 
 import aiohttp
 
 from src.core.dispatch.cand import Candidate, make_id
+from src.foundation.config.reader import load_plugin_api_keys
 from src.foundation.logger import get_logger
 from .consts import BASE_URL, CHAT_PATH, sleep_before_retry
 from .headers import build_headers, make_ssl_ctx
 from .payload import build_payload
 from .sse import parse_sse_line
+
+_PLUGIN_DIR = Path(__file__).resolve().parents[2]
 
 logger = get_logger(__name__)
 
