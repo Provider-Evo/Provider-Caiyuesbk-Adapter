@@ -3,6 +3,8 @@
 
 from __future__ import annotations
 
+import asyncio
+
 BASE_URL = "https://caiyuesbk.top:16188"
 CHAT_PATH = "/v1/chat/completions"
 
@@ -40,3 +42,10 @@ FETCH_MODELS_ENABLED: bool = True
 
 # 远程模型刷新间隔（秒），默认 24 小时
 MODEL_FETCH_INTERVAL: int = 86400
+
+async def sleep_before_retry(attempt: int, max_retries: int, logger) -> None:
+    """指数退避等待。"""
+    wait = 1.0 * (2 ** (attempt - 1))
+    logger.warning("caiyuesbk 第 %d/%d 次重试，等待 %.1fs", attempt, max_retries, wait)
+    await asyncio.sleep(wait)
+
